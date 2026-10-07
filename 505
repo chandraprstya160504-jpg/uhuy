@@ -1,0 +1,24 @@
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+local CROWN_ID = 10159600649 -- ID 8-Bit Royal Crown
+
+local function applyCrown(character)
+    local humanoid = character:WaitForChild("Humanoid")
+    
+    -- Mengambil asset 3D dari Roblox menggunakan akses executor
+    local success, objects = pcall(function()
+        return game:GetObjects("rbxassetid://" .. CROWN_ID)
+    end)
+    
+    if success and objects and objects[1] then
+        local crown = objects[1]
+        humanoid:AddAccessory(crown)
+    end
+end
+
+if player.Character then
+    applyCrown(player.Character)
+end
+
+player.CharacterAdded:Connect(applyCrown)
